@@ -35,7 +35,7 @@ async function summarizeText(text, tab) {
   }
 
 async function callServerSideAPI(text) {
-  const url = 'http://localhost:3000/summarize';
+  const url = 'https://text-summarizerz.herokuapp.com/summarize';
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
