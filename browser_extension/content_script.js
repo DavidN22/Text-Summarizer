@@ -5,23 +5,6 @@ chrome.runtime.onMessage.addListener((request) => {
     displayError(request.error);
   }
 });
-async function callServerSideAPI(text) {
-  const url = 'https://us-central1-text-summarizer-81daf.cloudfunctions.net/api/summarize';
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text }),
-  };
-
-  const response = await fetch(url, requestOptions);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.error || 'Error summarizing text');
-  }
-
-  return data;
-}
 function displayError(error) {
   // Create an error message using the error text
   const errorMessage = `Error: ${error}`;
