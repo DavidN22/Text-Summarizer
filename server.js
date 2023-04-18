@@ -37,6 +37,10 @@ app.post('/summarize', rateLimiter, async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.send('Hello, world!');
+});
+
 async function callOpenAIAPI(text) {
   const prompt = `Please summarize the following text:\n\n${text}\n\nSummary: `;
   console.log(prompt);
