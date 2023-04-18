@@ -15,7 +15,7 @@ app.use(express.json());
 
 const rateLimiter = RateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 2, // Limit each IP to 100 requests per interval
+  max: 15, // Limit each IP to 100 requests per interval
   handler: (req, res) => {
     const timeLeft = Math.ceil((req.rateLimit.resetTime - Date.now()) / 60000);
     res.status(429).json({ error: `Too many requests. Please wait ${timeLeft} minutes.` });
