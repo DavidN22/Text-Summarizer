@@ -3,7 +3,7 @@
     "name": "Text Summarizer",
     "version": "1.0",
     "description": "Summarize highlighted text using OpenAI API. This extension is for testing purposes and is FREE for a limited time.",
-   
+    "permissions": ["contextMenus", "activeTab", "scripting"],
     "background": {
       "service_worker": "background.js"
     },
