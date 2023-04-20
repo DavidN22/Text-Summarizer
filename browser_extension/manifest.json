@@ -2,8 +2,8 @@
     "manifest_version": 3,
     "name": "Text Summarizer",
     "version": "1.0",
-    "description": "Text Summarizer: Summarize highlighted text using OpenAI API. This extension is for testing purposes and is FREE for a limited time until testing is done.",
-    "permissions": ["contextMenus", "notifications", "activeTab", "scripting"],
+    "description": "Summarize highlighted text using OpenAI API. This extension is for testing purposes and is FREE for a limited time.",
+   
     "background": {
       "service_worker": "background.js"
     },
