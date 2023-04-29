@@ -16,30 +16,34 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 async function summarizeText(text, tab) {
-    try {
-      const summary = await callServerSideAPI(text);
-  
-      // Execute the content script
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ['content_script.js'],
-      }, () => {
-        // Send the summary to the content script
-        chrome.tabs.sendMessage(tab.id, { action: 'displaySummary',  summary });
-      });
-    } catch (error) {
-    
-      // Send the error message to the content script
-      chrome.tabs.sendMessage(tab.id, { action: 'displayError', error: error.message });
-    }
+  // Execute the content script
+  await chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: ['content_script.js'],
+  });
+
+  // Send the displayLoading message
+  chrome.tabs.sendMessage(tab.id, { action: 'displayLoading' });
+
+  try {
+    const summary = await callServerSideAPI(text);
+
+    // Send the summary to the content script
+    chrome.tabs.sendMessage(tab.id, { action: 'displaySummary', summary });
+  } catch (error) {
+    // Send the error message to the content script
+    chrome.tabs.sendMessage(tab.id, { action: 'displayError', error: error.message });
   }
+}
+
+
 
 async function callServerSideAPI(text) {
   const url = 'https://text-summarizerz.herokuapp.com/summarize';
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text}),
+    body: JSON.stringify({ text }),
   };
 
   const response = await fetch(url, requestOptions);

@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 async function callOpenAIAPI(text) {
-  const prompt = `Please summarize the following text:\n\n${text}\n\nSummary: `;
+  const prompt = `Please summarize the following text, keep it short and brief:\n\n${text}\n\nSummary: `;
   console.log(prompt);
 
   const completions = await openai.createChatCompletion({

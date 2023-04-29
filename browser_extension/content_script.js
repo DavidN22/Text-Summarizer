@@ -4,6 +4,10 @@ chrome.runtime.onMessage.addListener((request) => {
   } else if (request.action === 'displayError') {
     displayError(request.error);
   }
+
+  else if (request.action === 'displayLoading') {
+    displaySummary('Loading...', false, true);
+  }
 });
 function displayError(error) {
   // Create an error message using the error text
@@ -13,9 +17,15 @@ function displayError(error) {
   displaySummary(errorMessage, true);
 }
 
-function displaySummary(summary, isError = false) {
+function displaySummary(summary, isError = false, isLoading = false){
   const popup = document.createElement('div');
   popup.id = 'summary-popup';
+
+  const existingPopup = document.getElementById('summary-popup');
+  if (existingPopup) {
+    existingPopup.remove();
+  }
+
   // Inject CSS styles into the page
   if (isError) {
     console.log('error');
@@ -24,6 +34,13 @@ function displaySummary(summary, isError = false) {
 
     popup.classList.remove('error');
   }
+
+  if (isLoading) {
+    popup.classList.add('loading');
+  } else {
+    popup.classList.remove('loading');
+  }
+
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
@@ -72,16 +89,17 @@ function makeDraggable(popup) {
   let offsetY = 0;
 
   popup.addEventListener('mousedown', (event) => {
+    if (event.target.id === 'summary-text') {
+      return;
+    }
     isMouseDown = true;
     offsetX = event.clientX - popup.getBoundingClientRect().left;
     offsetY = event.clientY - popup.getBoundingClientRect().top;
     event.preventDefault();
   }, { passive: false });
-  document.addEventListener('mousedown', (event) => {
-    if (shouldClosePopup(popup, event.target)) {
-      popup.remove();
-    }
-  });
+
+
+
   popup.addEventListener('mousemove', (event) => {
     if (isMouseDown) {
       const x = event.clientX - offsetX;
