@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { Configuration, OpenAIApi } = require('openai');
 const RateLimiter = require('express-rate-limit');
-let apiKey = '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';
+let apiKey = process.env.API_KEY;
 const configuration = new Configuration({
   apiKey: apiKey,
 });
