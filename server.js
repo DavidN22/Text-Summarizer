@@ -33,7 +33,7 @@ app.post('/summarize', rateLimiter, async (req, res) => {
 
     res.json(summary);
   } catch (error) {
-    res.status(500).json({ error: 'Error summarizing text' });
+    res.status(500).json({ error: 'Error summarizing text'});
   }
 });
 
